@@ -1,4 +1,1 @@
-BloxProxy
-
-**This proxy is a modified version of UV Static 2.0**
-**ANd Scarmjet**
+Graphite is a static web proxy with UV Static 2.0 and Scramjet to deliver peak preformance
