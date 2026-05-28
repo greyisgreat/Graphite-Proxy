@@ -39,7 +39,6 @@
       overflow: hidden;
     }
 
-    /* drifting graphite orbs */
     .bg-orb {
       position: absolute;
       border-radius: 50%;
@@ -53,7 +52,6 @@
       background: radial-gradient(circle, #6060a0, transparent 70%);
       top: -200px; left: -100px;
       animation-duration: 22s;
-      animation-delay: 0s;
     }
     .bg-orb:nth-child(2) {
       width: 500px; height: 500px;
@@ -77,7 +75,6 @@
       100% { transform: translate(0, 0) scale(1); }
     }
 
-    /* falling particle dots */
     .particle {
       position: absolute;
       border-radius: 50%;
@@ -99,7 +96,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0;
       padding: 0 20px;
     }
 
@@ -174,10 +170,7 @@
       50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
-    #changingWord {
-      transition: opacity 0.4s ease;
-    }
-
+    #changingWord { transition: opacity 0.4s ease; }
     #changingWord.fade { opacity: 0; }
 
     /* ── SEARCH BAR ── */
@@ -201,34 +194,16 @@
       padding: 0 16px;
       gap: 10px;
       transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-      box-shadow:
-        0 4px 24px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.10);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .search-bar::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 15%; right: 15%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.10);
     }
 
     .search-bar:focus-within {
       background: rgba(255,255,255,0.09);
       border-color: rgba(140,140,210,0.35);
-      box-shadow:
-        0 4px 24px rgba(0,0,0,0.4),
-        0 0 0 3px rgba(100,100,180,0.10),
-        inset 0 1px 0 rgba(255,255,255,0.12);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 3px rgba(100,100,180,0.10);
     }
 
-    .search-icon {
-      width: 16px; height: 16px; flex-shrink: 0; opacity: 0.5;
-    }
-
+    .search-icon { width: 16px; height: 16px; opacity: 0.5; }
     .search-icon svg { width: 100%; height: 100%; fill: var(--text); }
 
     #searchInput {
@@ -239,7 +214,6 @@
       color: var(--text);
       font-family: 'Sora', sans-serif;
       font-size: 14px;
-      font-weight: 400;
     }
 
     #searchInput::placeholder { color: var(--muted); }
@@ -248,13 +222,10 @@
       font-size: 11px;
       color: var(--muted);
       opacity: 0.6;
-      flex-shrink: 0;
       padding: 3px 8px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 5px;
-      font-weight: 300;
-      letter-spacing: 0.05em;
     }
 
     /* ── SHORTCUTS GRID ── */
@@ -283,32 +254,14 @@
       color: var(--text);
       cursor: pointer;
       transition: background 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s;
-      overflow: hidden;
-      box-shadow:
-        0 4px 16px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.07);
       padding: 10px 8px;
-    }
-
-    .tile::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 10%; right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
-      transition: opacity 0.18s;
     }
 
     .tile:hover {
       background: rgba(255,255,255,0.08);
       border-color: rgba(255,255,255,0.14);
       transform: translateY(-3px);
-      box-shadow:
-        0 10px 28px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.12);
     }
-
-    .tile:active { transform: translateY(-1px); }
 
     .tile img.fav {
       width: 36px; height: 36px;
@@ -320,54 +273,28 @@
 
     .tile span {
       font-size: 11.5px;
-      font-weight: 400;
-      text-align: center;
+      color: var(--muted);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 90%;
-      color: var(--muted);
-      transition: color 0.18s;
     }
 
     .tile:hover span { color: var(--text); }
 
-    .add-tile {
-      background: rgba(255,255,255,0.025);
-      border-style: dashed;
-      border-color: rgba(255,255,255,0.10);
-    }
+    .add-tile { border-style: dashed; border-color: rgba(255,255,255,0.10); }
+    .add-icon { font-size: 28px; color: var(--muted); }
 
-    .add-tile:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(140,140,210,0.25);
-      border-style: dashed;
-    }
-
-    .add-icon {
-      font-size: 28px;
-      font-weight: 200;
-      color: var(--muted);
-      line-height: 1;
-      transition: color 0.18s;
-    }
-
-    .add-tile:hover .add-icon { color: var(--accent2); }
-
-    /* remove btn */
     .remove-btn {
       position: absolute;
       top: 7px; right: 7px;
       width: 18px; height: 18px;
       border-radius: 50%;
       background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.15);
       color: var(--text);
       font-size: 11px;
-      line-height: 17px;
       text-align: center;
       opacity: 0;
-      transition: opacity 0.15s, background 0.15s;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
@@ -381,137 +308,48 @@
       top: 28px; right: 32px;
       text-align: right;
       z-index: 2;
-      animation: fadeIn 1s ease both;
     }
 
-    .clock-time {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--text);
-      letter-spacing: 0.06em;
-      opacity: 0.85;
-    }
-
-    .clock-date {
-      font-size: 0.65rem;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
+    .clock-time { font-size: 1.1rem; font-weight: 500; opacity: 0.85; }
+    .clock-date { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
 
     /* ── MODAL ── */
     .modal {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.55);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       z-index: 100;
-      visibility: hidden;
-      opacity: 0;
+      visibility: hidden; opacity: 0;
       transition: opacity 0.2s, visibility 0.2s;
     }
 
     .modal.active { visibility: visible; opacity: 1; }
 
     .modal-box {
-      backdrop-filter: blur(32px) saturate(180%);
-      -webkit-backdrop-filter: blur(32px) saturate(180%);
       background: rgba(18,18,26,0.94);
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 18px;
       padding: 28px;
       width: 340px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      box-shadow:
-        0 24px 64px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.10);
-      animation: panelIn 0.22s ease both;
-    }
-
-    @keyframes panelIn {
-      from { opacity: 0; transform: scale(0.96) translateY(-8px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .modal-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.04em;
+      display: flex; flex-direction: column; gap: 14px;
     }
 
     .modal-box input {
-      width: 100%;
-      height: 38px;
+      width: 100%; height: 38px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.09);
       border-radius: 9px;
       color: var(--text);
-      font-family: 'Sora', sans-serif;
-      font-size: 13px;
       padding: 0 12px;
       outline: none;
-      transition: border-color 0.15s, background 0.15s;
     }
-
-    .modal-box input:focus {
-      border-color: rgba(140,140,210,0.35);
-      background: rgba(255,255,255,0.08);
-    }
-
-    .modal-box input::placeholder { color: var(--muted); }
 
     .btn-row { display: flex; justify-content: flex-end; gap: 8px; }
+    .btn-cancel { height: 36px; padding: 0 16px; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 9px; color: var(--muted); cursor: pointer; }
+    .btn-add { height: 36px; padding: 0 18px; background: linear-gradient(135deg, rgba(110,110,190,0.7), rgba(80,80,160,0.5)); border: none; border-radius: 9px; color: #fff; font-weight: 600; cursor: pointer; }
 
-    .btn-cancel {
-      height: 36px;
-      padding: 0 16px;
-      border: 1px solid rgba(255,255,255,0.09);
-      background: rgba(255,255,255,0.05);
-      border-radius: 9px;
-      color: var(--muted);
-      font-family: 'Sora', sans-serif;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .btn-cancel:hover { background: rgba(255,255,255,0.09); color: var(--text); }
-
-    .btn-add {
-      height: 36px;
-      padding: 0 18px;
-      border: 1px solid rgba(140,140,210,0.25);
-      background: linear-gradient(135deg, rgba(110,110,190,0.7), rgba(80,80,160,0.5));
-      border-radius: 9px;
-      color: #fff;
-      font-family: 'Sora', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-    }
-
-    .btn-add:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    ::-webkit-scrollbar { display: none; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -528,228 +366,146 @@
   </div>
 
   <div class="wrap">
-
     <div class="hero">
       <div class="hero-logo">
         <div class="gem-icon">
           <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#d0d0f0"/>
-                <stop offset="50%" style="stop-color:#8080c0"/>
-                <stop offset="100%" style="stop-color:#3a3a70"/>
-              </linearGradient>
-              <linearGradient id="g2" x1="0%" y1="0%" x2="60%" y2="60%">
-                <stop offset="0%" style="stop-color:rgba(255,255,255,0.55)"/>
-                <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
-              </linearGradient>
-            </defs>
-            <polygon points="32,3 60,19 60,45 32,61 4,45 4,19" fill="url(#g1)" opacity="0.92"/>
-            <polygon points="32,3 60,19 32,32" fill="url(#g2)" opacity="0.5"/>
-            <polygon points="32,3 4,19 32,32" fill="rgba(255,255,255,0.06)"/>
-            <polygon points="32,32 60,19 60,45 32,61" fill="rgba(0,0,0,0.22)"/>
-            <polygon points="32,32 4,19 4,45 32,61" fill="rgba(0,0,0,0.12)"/>
+            <polygon points="32,3 60,19 60,45 32,61 4,45 4,19" fill="linear-gradient(135deg,#d0d0f0,#3a3a70)"/>
           </svg>
         </div>
         <div class="hero-title">Graphite</div>
       </div>
       <div class="hero-sub">New Tab</div>
-      <div class="hero-changing">
-        <span id="changingWord">Searching</span>
-      </div>
+      <div class="hero-changing"><span id="changingWord">Searching</span></div>
     </div>
 
     <div class="search-wrap">
       <div class="search-bar">
         <div class="search-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-          </svg>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
         </div>
-        <input id="searchInput" type="text" placeholder="Search DuckDuckGo or enter a URL..." autocomplete="off" spellcheck="false">
+        <form id="searchForm" style="flex: 1; display: flex;" action="/uv/service" method="POST">
+          <input id="searchInput" name="url" type="text" placeholder="Search or enter a URL..." autocomplete="off">
+        </form>
         <span class="search-hint">↵ Enter</span>
       </div>
     </div>
 
     <div class="shortcuts" id="shortcuts"></div>
-
   </div>
 
   <div class="modal" id="addModal">
     <div class="modal-box">
-      <div class="modal-title">Add Shortcut</div>
-      <input type="text"  id="nameInput" placeholder="Name">
-      <input type="url"   id="urlInput"  placeholder="URL (https://...)">
-      <input type="url"   id="iconInput" placeholder="Icon URL (optional)">
+      <h3>Add Shortcut</h3>
+      <input type="text" id="nameInput" placeholder="Name">
+      <input type="url" id="urlInput" placeholder="URL">
+      <input type="url" id="iconInput" placeholder="Icon URL (Optional)">
       <div class="btn-row">
         <button class="btn-cancel" id="cancelBtn">Cancel</button>
-        <button class="btn-add"    id="confirmBtn">Add</button>
+        <button class="btn-add" id="confirmBtn">Add</button>
       </div>
     </div>
   </div>
 
   <script>
-    /* ── PROXY REDIRECT HANDLER ── */
-    function goProxy(targetUrl) {
-      let url = targetUrl.trim();
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url;
+    /* ── BROWSER NAVIGATION HANDLER ── */
+    function launchUrl(target) {
+      let query = target.trim();
+      if (!query) return;
+
+      // Simple standard search fallback logic
+      const isUrl = query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '));
+      if (!isUrl) {
+        query = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
+      } else if (!query.startsWith('http')) {
+        query = 'https://' + query;
       }
 
-      // 1. Pull current environment encoding objects up the live iframe hierarchy
-      const uvConfig = window.__uv$config || (window.parent && window.parent.__uv$config) || (window.top && window.top.__uv$config);
-      const uvEncode = window.__uv$encodeUrl || (window.parent && window.parent.__uv$encodeUrl) || (window.top && window.top.__uv$encodeUrl);
-
-      if (uvConfig && uvEncode) {
-        window.top.location.href = window.top.location.origin + uvConfig.prefix + uvEncode(url);
-        return;
+      // Check if your primary browser environment logic has native custom encoders loaded globally
+      const encoder = window.__uv$encodeUrl || (window.top && window.top.__uv$encodeUrl);
+      if (encoder) {
+        window.top.location.href = window.top.location.origin + "/uv/service/" + encoder(query);
+      } else {
+        // Simple direct browser navigation fallback matching standard forms
+        const form = document.getElementById('searchForm');
+        const input = document.getElementById('searchInput');
+        input.value = query;
+        form.target = "_top"; // breakout to main view container
+        form.submit();
       }
-
-      // 2. Custom Script Fallback via search index redirection (Standard logic used on static Cloudflare architectures)
-      // This routes back through the primary processing engine index file to execute configuration workers properly
-      window.top.location.href = window.top.location.origin + "/index.html?url=" + encodeURIComponent(url);
     }
+
+    /* ── SEARCH BOX SUBMIT INTERCEPTION ── */
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputVal = document.getElementById('searchInput').value;
+      launchUrl(inputVal);
+    });
 
     /* ── PARTICLES ── */
     const bg = document.getElementById('bg');
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 70; i++) {
       const d = document.createElement('div');
       d.className = 'particle';
-      const s = Math.random() * 2.5 + 1;
-      d.style.cssText = `
-        width:${s}px; height:${s}px;
-        left:${Math.random()*100}%;
-        animation-duration:${5 + Math.random()*14}s;
-        animation-delay:${Math.random()*10}s;
-        opacity:${0.2 + Math.random()*0.5};
-      `;
+      const s = Math.random() * 2 + 1;
+      d.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${6+Math.random()*12}s;animation-delay:${Math.random()*5}s;`;
       bg.appendChild(d);
-      d.addEventListener('animationiteration', () => {
-        d.style.left = Math.random()*100 + '%';
-        d.style.animationDuration = (5 + Math.random()*14) + 's';
-      });
     }
 
-    /* ── CLOCK ── */
+    /* ── CLOCK & WORD TOGGLE ── */
     function updateClock() {
       const now = new Date();
-      const h = now.getHours(), m = now.getMinutes();
-      const hh = h % 12 || 12, mm = m < 10 ? '0'+m : m;
-      const ampm = h < 12 ? 'AM' : 'PM';
-      document.getElementById('clockTime').textContent = `${hh}:${mm} ${ampm}`;
-      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      document.getElementById('clockDate').textContent =
-        `${days[now.getDay()]} · ${months[now.getMonth()]} ${now.getDate()}`;
+      let h = now.getHours(), m = now.getMinutes();
+      document.getElementById('clockTime').textContent = `${h % 12 || 12}:${m < 10 ? '0'+m : m} ${h < 12 ? 'AM':'PM'}`;
+      document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
     }
-    updateClock();
-    setInterval(updateClock, 1000);
+    updateClock(); setInterval(updateClock, 1000);
 
-    /* ── CHANGING WORD ── */
-    const words = ['Searching', 'Browsing', 'Discovering', 'Exploring', 'Loading'];
-    const wordEl = document.getElementById('changingWord');
+    const words = ['Searching', 'Browsing', 'Exploring'];
     let wi = 0;
     setInterval(() => {
-      wordEl.classList.add('fade');
-      setTimeout(() => {
-        wi = (wi + 1) % words.length;
-        wordEl.textContent = words[wi];
-        wordEl.classList.remove('fade');
-      }, 400);
-    }, 2400);
+      const el = document.getElementById('changingWord');
+      el.classList.add('fade');
+      setTimeout(() => { wi = (wi+1)%words.length; el.textContent = words[wi]; el.classList.remove('fade'); }, 400);
+    }, 3000);
 
-    /* ── SHORTCUTS ── */
-    const defaultShortcuts = [
-      { name: 'YouTube',    url: 'https://youtube.com',    icon: 'https://www.youtube.com/favicon.ico' },
-      { name: 'DuckDuckGo', url: 'https://duckduckgo.com', icon: 'https://duckduckgo.com/static-assets/favicons/DDG-iOS-icon_60x60.png' },
-      { name: 'GitHub',     url: 'https://github.com',     icon: 'https://github.com/favicon.ico' },
-      { name: 'Discord',    url: 'https://discord.com/app',icon: 'https://discord.com/assets/favicon.ico' },
+    /* ── DASHBOARD SHORTCUT TILES ── */
+    const defaults = [
+      { name: 'YouTube', url: 'https://youtube.com', icon: 'https://www.youtube.com/favicon.ico' },
+      { name: 'DuckDuckGo', url: 'https://duckduckgo.com', icon: 'https://duckduckgo.com/favicon.ico' },
+      { name: 'GitHub', url: 'https://github.com', icon: 'https://github.com/favicon.ico' }
     ];
 
-    function loadShortcuts() {
-      try {
-        const d = localStorage.getItem('graphite-shortcuts');
-        return d ? JSON.parse(d) : defaultShortcuts;
-      } catch { return defaultShortcuts; }
-    }
-
-    function saveShortcuts(list) {
-      localStorage.setItem('graphite-shortcuts', JSON.stringify(list));
-    }
-
     function renderShortcuts() {
-      const list = loadShortcuts();
-      const el = document.getElementById('shortcuts');
-      el.innerHTML = '';
-
+      const list = JSON.parse(localStorage.getItem('g-shorts') || JSON.stringify(defaults));
+      const box = document.getElementById('shortcuts');
+      box.innerHTML = '';
+      
       list.forEach((s, i) => {
-        const a = document.createElement('a');
-        a.className = 'tile';
-        a.href = '#';
-        a.innerHTML = `
-          <div class="remove-btn" title="Remove">✕</div>
-          <img class="fav" src="${s.icon || 'https://cdn-icons-png.flaticon.com/512/545/545682.png'}" alt="" onerror="this.style.display='none'">
-          <span>${s.name}</span>
-        `;
-        
-        a.addEventListener('click', e => {
-          e.preventDefault();
-          goProxy(s.url);
-        });
-
-        a.querySelector('.remove-btn').addEventListener('click', e => {
-          e.preventDefault(); e.stopPropagation();
-          const l = loadShortcuts();
-          l.splice(i, 1);
-          saveShortcuts(l);
-          renderShortcuts();
-        });
-        el.appendChild(a);
+        const item = document.createElement('div');
+        item.className = 'tile';
+        item.innerHTML = `<div class="remove-btn">✕</div><img class="fav" src="${s.icon}"><span style="margin-top:4px">${s.name}</span>`;
+        item.onclick = (e) => { if(!e.target.classList.contains('remove-btn')) launchUrl(s.url); };
+        item.querySelector('.remove-btn').onclick = (e) => { e.stopPropagation(); list.splice(i,1); localStorage.setItem('g-shorts', JSON.stringify(list)); renderShortcuts(); };
+        box.appendChild(item);
       });
 
-      // Add shortcut tile
       const add = document.createElement('div');
       add.className = 'tile add-tile';
-      add.innerHTML = `<div class="add-icon">+</div><span>Add</span>`;
-      add.addEventListener('click', () => document.getElementById('addModal').classList.add('active'));
-      el.appendChild(add);
+      add.innerHTML = '<div class="add-icon">+</div><span>Add</span>';
+      add.onclick = () => document.getElementById('addModal').classList.add('active');
+      box.appendChild(add);
     }
-
     renderShortcuts();
 
-    /* ── SEARCH ── */
-    document.getElementById('searchInput').addEventListener('keydown', e => {
-      if (e.key !== 'Enter') return;
-      const val = e.target.value.trim();
-      if (!val) return;
-      const isUrl = val.startsWith('http://') || val.startsWith('https://') || (val.includes('.') && !val.includes(' '));
-      
-      const finalUrl = isUrl
-        ? (val.startsWith('http') ? val : 'https://' + val)
-        : 'https://duckduckgo.com/?q=' + encodeURIComponent(val);
-        
-      goProxy(finalUrl);
-    });
-
-    /* ── MODAL ── */
-    const modal   = document.getElementById('addModal');
-    const nameIn  = document.getElementById('nameInput');
-    const urlIn   = document.getElementById('urlInput');
-    const iconIn  = document.getElementById('iconInput');
-
-    document.getElementById('cancelBtn').onclick  = () => modal.classList.remove('active');
-    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
-
+    document.getElementById('cancelBtn').onclick = () => document.getElementById('addModal').classList.remove('active');
     document.getElementById('confirmBtn').onclick = () => {
-      const name = nameIn.value.trim();
-      const url  = urlIn.value.trim();
-      const icon = iconIn.value.trim();
-      if (!name || !url) return;
-      const list = loadShortcuts();
-      list.push({ name, url, icon: icon || `https://www.google.com/s2/favicons?domain=${url}&sz=64` });
-      saveShortcuts(list);
-      modal.classList.remove('active');
-      nameIn.value = urlIn.value = iconIn.value = '';
+      const n = document.getElementById('nameInput').value, u = document.getElementById('urlInput').value, i = document.getElementById('iconInput').value;
+      if(!n || !u) return;
+      const list = JSON.parse(localStorage.getItem('g-shorts') || JSON.stringify(defaults));
+      list.push({ name: n, url: u, icon: i || `https://www.google.com/s2/favicons?domain=${u}` });
+      localStorage.setItem('g-shorts', JSON.stringify(list));
+      document.getElementById('addModal').classList.remove('active');
       renderShortcuts();
     };
   </script>
