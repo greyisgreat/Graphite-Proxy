@@ -516,23 +516,19 @@
 </head>
 <body>
 
-  <!-- BACKGROUND -->
   <div class="bg" id="bg">
     <div class="bg-orb"></div>
     <div class="bg-orb"></div>
     <div class="bg-orb"></div>
   </div>
 
-  <!-- CLOCK -->
   <div class="clock">
     <div class="clock-time" id="clockTime">—</div>
     <div class="clock-date" id="clockDate">—</div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <div class="wrap">
 
-    <!-- HERO -->
     <div class="hero">
       <div class="hero-logo">
         <div class="gem-icon">
@@ -563,7 +559,6 @@
       </div>
     </div>
 
-    <!-- SEARCH -->
     <div class="search-wrap">
       <div class="search-bar">
         <div class="search-icon">
@@ -576,12 +571,10 @@
       </div>
     </div>
 
-    <!-- SHORTCUTS -->
     <div class="shortcuts" id="shortcuts"></div>
 
   </div>
 
-  <!-- ADD SHORTCUT MODAL -->
   <div class="modal" id="addModal">
     <div class="modal-box">
       <div class="modal-title">Add Shortcut</div>
@@ -596,6 +589,18 @@
   </div>
 
   <script>
+    /* ── PROXY REDIRECT HANDLER ── */
+    // This dynamically processes routes back into your site proxy layout structure
+    function goProxy(targetUrl) {
+      if (typeof window.parent.loadUrl === 'function') {
+        window.parent.loadUrl(targetUrl);
+      } else if (window.parent && window.parent.__uv$setStatus) {
+        window.parent.location.href = window.parent.__uv$config.prefix + window.parent.__uv$encodeUrl(targetUrl);
+      } else {
+        window.location.href = "/go/" + btoa(targetUrl);
+      }
+    }
+
     /* ── PARTICLES ── */
     const bg = document.getElementById('bg');
     for (let i = 0; i < 120; i++) {
@@ -671,13 +676,18 @@
       list.forEach((s, i) => {
         const a = document.createElement('a');
         a.className = 'tile';
-        a.href = s.url;
-        a.target = '_self';
+        a.href = '#';
         a.innerHTML = `
           <div class="remove-btn" title="Remove">✕</div>
           <img class="fav" src="${s.icon || 'https://cdn-icons-png.flaticon.com/512/545/545682.png'}" alt="" onerror="this.style.display='none'">
           <span>${s.name}</span>
         `;
+        
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          goProxy(s.url);
+        });
+
         a.querySelector('.remove-btn').addEventListener('click', e => {
           e.preventDefault(); e.stopPropagation();
           const l = loadShortcuts();
@@ -704,9 +714,12 @@
       const val = e.target.value.trim();
       if (!val) return;
       const isUrl = val.startsWith('http://') || val.startsWith('https://') || (val.includes('.') && !val.includes(' '));
-      window.location.href = isUrl
+      
+      const finalUrl = isUrl
         ? (val.startsWith('http') ? val : 'https://' + val)
         : 'https://duckduckgo.com/?q=' + encodeURIComponent(val);
+        
+      goProxy(finalUrl);
     });
 
     /* ── MODAL ── */
