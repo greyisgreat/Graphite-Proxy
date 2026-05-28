@@ -52,7 +52,7 @@ pageRefresh.onclick = () => {
 };
 
 newTabButton.onclick = () => {
-  addTab("/newtab/index.html");
+  addTab("https://base-for-graphite.pages.dev/");
 };
 
 // Options (opt menu)
@@ -133,7 +133,7 @@ const tabItem = (tab) => {
             if (tabs.length) focusTab(tabs[tabs.length - 1]);
             else
               setTimeout(() => {
-                addTab("/newtab/index.html");
+                addTab("https://base-for-graphite.pages.dev/");
               }, 100);
           }
 
@@ -258,7 +258,7 @@ async function addTab(link) {
   focusTab(tab);
 }
 
-addTab("/newtab/index.html");
+addTab("https://base-for-graphite.pages.dev/");
 
 const urlParams = new URLSearchParams(window.location.search);
 
