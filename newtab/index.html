@@ -590,15 +590,33 @@
 
   <script>
     /* ── PROXY REDIRECT HANDLER ── */
-    // This dynamically processes routes back into your site proxy layout structure
     function goProxy(targetUrl) {
-      if (typeof window.parent.loadUrl === 'function') {
-        window.parent.loadUrl(targetUrl);
-      } else if (window.parent && window.parent.__uv$setStatus) {
-        window.parent.location.href = window.parent.__uv$config.prefix + window.parent.__uv$encodeUrl(targetUrl);
-      } else {
-        window.location.href = "/go/" + btoa(targetUrl);
+      let url = targetUrl.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
       }
+
+      // Ultraviolet Check across layout tree heights
+      const uvConfig = window.__uv$config || (window.parent && window.parent.__uv$config) || (window.top && window.top.__uv$config);
+      const uvEncode = window.__uv$encodeUrl || (window.parent && window.parent.__uv$encodeUrl) || (window.top && window.top.__uv$encodeUrl);
+
+      if (uvConfig && uvEncode) {
+        window.top.location.href = uvConfig.prefix + uvEncode(url);
+        return;
+      }
+
+      // Main layout routing injection checks
+      if (window.parent && typeof window.parent.loadUrl === 'function' && window.parent !== window) {
+        window.parent.loadUrl(url);
+        return;
+      }
+      if (window.top && typeof window.top.loadUrl === 'function') {
+        window.top.loadUrl(url);
+        return;
+      }
+
+      // Direct document domain routing fallback fallback
+      window.top.location.href = "/go/" + btoa(url);
     }
 
     /* ── PARTICLES ── */
