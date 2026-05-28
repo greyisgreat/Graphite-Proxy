@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Graphite — New Tab</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght=200;300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -596,36 +596,30 @@
         url = 'https://' + url;
       }
 
-      // 1. Check if we're inside Ultraviolet by searching the window layers
+      // 1. Direct Object Injection Detection
       const uvConfig = window.__uv$config || (window.parent && window.parent.__uv$config) || (window.top && window.top.__uv$config);
       const uvEncode = window.__uv$encodeUrl || (window.parent && window.parent.__uv$encodeUrl) || (window.top && window.top.__uv$encodeUrl);
 
       if (uvConfig && uvEncode) {
-        // Find the wrapper frame that runs inside the math-hub dashboard setup
-        const mainFrame = window.top.document.getElementById('archive-frame') || window.top.document.getElementById('uv-frame') || window.top.document.querySelector('iframe');
-        
-        if (mainFrame) {
-          // Point the parent proxy frame to the newly encoded address
-          mainFrame.src = uvConfig.prefix + uvEncode(url);
-        } else {
-          // If no outer layout iframe exists, change the top browser tab location
-          window.top.location.href = uvConfig.prefix + uvEncode(url);
-        }
+        // Run it directly into the top level window context
+        window.top.location.href = uvConfig.prefix + uvEncode(url);
         return;
       }
 
-      // 2. Fallback: If your dashboard layout has a custom script registry loader built in
-      if (window.parent && typeof window.parent.loadUrl === 'function' && window.parent !== window) {
-        window.parent.loadUrl(url);
-        return;
-      }
-      if (window.top && typeof window.top.loadUrl === 'function') {
-        window.top.loadUrl(url);
-        return;
+      // 2. Main Container UI Target Breakout
+      // Searches your dashboard code for an iframe container (like archive-frame, uv-frame, etc.)
+      const topDoc = window.top.document;
+      const targetFrame = topDoc.getElementById('archive-frame') || topDoc.getElementById('uv-frame') || topDoc.querySelector('iframe');
+      
+      // If we are currently executing inside that frame, change the top browser tab's destination to prevent nesting!
+      if (targetFrame && window.self !== window.top) {
+         window.top.location.href = window.top.location.origin + "/uv/service/" + encodeURIComponent(url);
+         return;
       }
 
-      // 3. Absolute Fallback: Route via static folder registry without breaking the global window history loop
-      window.location.href = window.location.origin + "/service/" + encodeURIComponent(url);
+      // 3. Complete Root Directory Path Parsing (Safe Fallback)
+      // This will force the parent window to parse Ultraviolet directly from the root domain origin
+      window.top.location.href = window.top.location.origin + "/uv/service/" + encodeURIComponent(url);
     }
 
     /* ── PARTICLES ── */
