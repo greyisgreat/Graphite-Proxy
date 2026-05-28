@@ -38,6 +38,7 @@ window.onmousemove = (e) => {
     sideBar.classList.remove("hovered");
   }
 };
+
 pageBack.onclick = () => {
   selectedTab.view.contentWindow.history.back();
 };
@@ -51,7 +52,7 @@ pageRefresh.onclick = () => {
 };
 
 newTabButton.onclick = () => {
-  addTab("math-hub.pages.dev/newtab");
+  addTab("/newtab/index.html");
 };
 
 // Options (opt menu)
@@ -61,7 +62,6 @@ const gitOption = document.getElementById("git-option");
 
 devtoolsOption.onclick = () => {
   try {
-    // Assuming `selectedTab.view.contentWindow` is your target window
     selectedTab.view.contentWindow.eval(eruda);
     rAlert("Injected successfully.<br>Click the icon on the bottom right.");
   } catch (error) {
@@ -75,7 +75,7 @@ abcOption.onclick = () => {
 };
 
 gitOption.onclick = () => {
-  window.open("https://github.com/tharun9772/bloxproxy", "_blank");
+  window.open("https://github.com/greyisgreat/Graphite-Proxy", "_blank");
 };
 
 urlForm.onsubmit = async (e) => {
@@ -133,7 +133,7 @@ const tabItem = (tab) => {
             if (tabs.length) focusTab(tabs[tabs.length - 1]);
             else
               setTimeout(() => {
-                addTab("math-hub.pages.dev/newtab");
+                addTab("/newtab/index.html");
               }, 100);
           }
 
@@ -248,7 +248,7 @@ async function addTab(link) {
   focusTab(tab);
 }
 
-addTab("math-hub.pages.dev/newtab");
+addTab("/newtab/index.html");
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -257,7 +257,7 @@ if (urlParams.has("inject")) {
   const injection = urlParams.get("inject");
 
   setTimeout(() => {
-    addTab(injection)
-    focusTab()
+    addTab(injection);
+    focusTab();
   }, 100);
 }
