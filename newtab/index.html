@@ -596,16 +596,25 @@
         url = 'https://' + url;
       }
 
-      // Ultraviolet Check across layout tree heights
+      // 1. Check if we're inside Ultraviolet by searching the window layers
       const uvConfig = window.__uv$config || (window.parent && window.parent.__uv$config) || (window.top && window.top.__uv$config);
       const uvEncode = window.__uv$encodeUrl || (window.parent && window.parent.__uv$encodeUrl) || (window.top && window.top.__uv$encodeUrl);
 
       if (uvConfig && uvEncode) {
-        window.top.location.href = uvConfig.prefix + uvEncode(url);
+        // Find the wrapper frame that runs inside the math-hub dashboard setup
+        const mainFrame = window.top.document.getElementById('archive-frame') || window.top.document.getElementById('uv-frame') || window.top.document.querySelector('iframe');
+        
+        if (mainFrame) {
+          // Point the parent proxy frame to the newly encoded address
+          mainFrame.src = uvConfig.prefix + uvEncode(url);
+        } else {
+          // If no outer layout iframe exists, change the top browser tab location
+          window.top.location.href = uvConfig.prefix + uvEncode(url);
+        }
         return;
       }
 
-      // Main layout routing injection checks
+      // 2. Fallback: If your dashboard layout has a custom script registry loader built in
       if (window.parent && typeof window.parent.loadUrl === 'function' && window.parent !== window) {
         window.parent.loadUrl(url);
         return;
@@ -615,8 +624,8 @@
         return;
       }
 
-      // Direct document domain routing fallback fallback
-      window.top.location.href = "/go/" + btoa(url);
+      // 3. Absolute Fallback: Route via static folder registry without breaking the global window history loop
+      window.location.href = window.location.origin + "/service/" + encodeURIComponent(url);
     }
 
     /* ── PARTICLES ── */
