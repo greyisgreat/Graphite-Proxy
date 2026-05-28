@@ -3,417 +3,249 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Graphite — New Tab</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght=200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Bloxcraft - New Tab</title>
+  <link rel="icon" href="/bloxcraft_transparent.png" type="image/png">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --g0: #07070a;
-      --g1: #0e0e13;
-      --g2: #15151c;
-      --g3: #1d1d26;
-      --g4: #272733;
-      --g5: #333342;
-      --text: #e6e6f0;
-      --muted: #80809a;
-      --accent: #9898c8;
-      --accent2: #b4b4d8;
-      --glass: rgba(255,255,255,0.04);
-      --glass-b: rgba(255,255,255,0.08);
-      --glass-hl: rgba(255,255,255,0.12);
-      --blur: blur(24px) saturate(160%);
+    :root{
+      --tile-bg: rgba(255,255,255,0.85);
+      --tile-hover: rgba(255,255,255,0.95);
+      --shadow: 0 6px 18px rgba(0,0,0,0.12);
+      --radius: 12px;
+      --muted: rgba(32,33,36,0.6);
     }
-
+    #bgFrame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 0;
+      pointer-events: none; 
+      filter: brightness(0.8); 
+      background: transparent;
+    }
+    body {
+      background-color: black; 
+      background: linear-gradient(-45deg, #1e1b4b, #312e81, #3730a3, #1e3a8a);
+      margin: 0;
+      font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+      color: #fff; 
+      overflow: hidden;
+    }
     html, body {
-      width: 100%; height: 100%;
-      background: var(--g0);
-      color: var(--text);
-      font-family: 'Sora', sans-serif;
-      overflow: hidden;
+      margin: 0;
+      height: 100%;
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      text-align: center;
     }
-
-    /* ── ANIMATED BACKGROUND ── */
-    .bg {
-      position: fixed; inset: 0; z-index: 0;
-      overflow: hidden;
-    }
-
-    .bg-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.18;
-      animation: orbDrift linear infinite;
-    }
-
-    .bg-orb:nth-child(1) {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, #6060a0, transparent 70%);
-      top: -200px; left: -100px;
-      animation-duration: 22s;
-    }
-    .bg-orb:nth-child(2) {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, #404080, transparent 70%);
-      bottom: -150px; right: -100px;
-      animation-duration: 28s;
-      animation-delay: -8s;
-    }
-    .bg-orb:nth-child(3) {
-      width: 350px; height: 350px;
-      background: radial-gradient(circle, #8080c0, transparent 70%);
-      top: 40%; left: 50%;
-      animation-duration: 18s;
-      animation-delay: -4s;
-    }
-
-    @keyframes orbDrift {
-      0%   { transform: translate(0, 0) scale(1); }
-      33%  { transform: translate(40px, -30px) scale(1.05); }
-      66%  { transform: translate(-20px, 40px) scale(0.97); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(180, 180, 220, 0.6);
-      animation: particleFall linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes particleFall {
-      0%   { transform: translateY(-10px); opacity: 0.7; }
-      100% { transform: translateY(101vh);  opacity: 0.1; }
-    }
-
-    /* ── MAIN LAYOUT ── */
     .wrap {
-      position: relative; z-index: 1;
-      width: 100%; height: 100%;
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
+      align-items: center;
+    }
+    .logo-rect {
+      width: 250px;
+      height: 120px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 20px;
+      margin-bottom: 24px;
     }
-
-    /* ── HERO TEXT ── */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 32px;
-      animation: fadeUp 0.8s ease both;
+    .logo-rect img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
-
-    .hero-logo {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 4px;
-    }
-
-    .gem-icon {
-      width: 48px; height: 48px;
-      filter: drop-shadow(0 0 14px rgba(160,160,220,0.5));
-    }
-
-    .gem-icon svg { width: 100%; height: 100%; }
-
-    .hero-title {
-      font-size: 2.8rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #e8e8fc 0%, #a8a8d8 45%, #6868b0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-
-    .hero-sub {
-      font-size: 0.72rem;
-      font-weight: 300;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .hero-changing {
-      font-size: 0.8rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      color: var(--accent2);
-      opacity: 0.85;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-changing::before {
-      content: '';
-      display: block;
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
-      animation: pulse 2s ease infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.7); }
-    }
-
-    #changingWord { transition: opacity 0.4s ease; }
-    #changingWord.fade { opacity: 0; }
-
-    /* ── SEARCH BAR ── */
-    .search-wrap {
+    /* Fixed search container and padding values */
+    .search-wrapper {
       position: relative;
-      width: min(560px, 90vw);
+      width: 480px;
+      max-width: 90vw;
       margin-bottom: 36px;
-      animation: fadeUp 0.8s 0.1s ease both;
     }
-
-    .search-bar {
+    .search-input {
       width: 100%;
-      height: 48px;
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      gap: 10px;
-      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.10);
-    }
-
-    .search-bar:focus-within {
-      background: rgba(255,255,255,0.09);
-      border-color: rgba(140,140,210,0.35);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 3px rgba(100,100,180,0.10);
-    }
-
-    .search-icon { width: 16px; height: 16px; opacity: 0.5; }
-    .search-icon svg { width: 100%; height: 100%; fill: var(--text); }
-
-    #searchInput {
-      flex: 1;
-      background: transparent;
-      border: none;
+      height: 50px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      padding: 0 24px;
+      font-size: 16px;
+      color: #222;
+      background: white;
       outline: none;
-      color: var(--text);
-      font-family: 'Sora', sans-serif;
-      font-size: 14px;
+      box-sizing: border-box;
     }
-
-    #searchInput::placeholder { color: var(--muted); }
-
-    .search-hint {
-      font-size: 11px;
-      color: var(--muted);
-      opacity: 0.6;
-      padding: 3px 8px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 5px;
-    }
-
-    /* ── SHORTCUTS GRID ── */
     .shortcuts {
-      width: min(680px, 92vw);
+      width: min(760px, 90vw);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(108px, 1fr));
-      gap: 14px;
-      animation: fadeUp 0.8s 0.2s ease both;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 18px;
+      justify-items: center;
     }
-
     .tile {
       position: relative;
-      height: 100px;
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
+      width: 110px;
+      height: 110px;
+      background: var(--tile-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       text-decoration: none;
-      color: var(--text);
+      color: #222;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      padding: 10px;
       cursor: pointer;
-      transition: background 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s;
-      padding: 10px 8px;
+      box-sizing: border-box;
     }
-
     .tile:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.14);
-      transform: translateY(-3px);
+      background: var(--tile-hover);
+      transform: translateY(-4px);
     }
-
     .tile img.fav {
-      width: 36px; height: 36px;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 8px;
       object-fit: contain;
       border-radius: 8px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.6);
       padding: 6px;
     }
-
     .tile span {
-      font-size: 11.5px;
-      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 90%;
+      width: 100%;
     }
-
-    .tile:hover span { color: var(--text); }
-
-    .add-tile { border-style: dashed; border-color: rgba(255,255,255,0.10); }
-    .add-icon { font-size: 28px; color: var(--muted); }
-
+    .add-btn {
+      font-size: 44px;
+      color: var(--muted);
+      user-select: none;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
     .remove-btn {
       position: absolute;
-      top: 7px; right: 7px;
-      width: 18px; height: 18px;
+      top: 6px; 
+      right: 6px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      color: var(--text);
-      font-size: 11px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 12px;
+      line-height: 20px;
       text-align: center;
       opacity: 0;
+      transition: opacity .2s ease;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      z-index: 5;
     }
-
     .tile:hover .remove-btn { opacity: 1; }
-    .remove-btn:hover { background: rgba(220,80,80,0.4); }
-
-    /* ── CLOCK ── */
-    .clock {
-      position: fixed;
-      top: 28px; right: 32px;
-      text-align: right;
-      z-index: 2;
-    }
-
-    .clock-time { font-size: 1.1rem; font-weight: 500; opacity: 0.85; }
-    .clock-date { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
-
-    /* ── MODAL ── */
+    .remove-btn:hover { background: rgba(220, 50, 50, 0.9); }
+    
+    /* MODAL WINDOWS */
     .modal {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(10px);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 100;
-      visibility: hidden; opacity: 0;
-      transition: opacity 0.2s, visibility 0.2s;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .2s ease, visibility .2s ease;
     }
-
     .modal.active { visibility: visible; opacity: 1; }
-
-    .modal-box {
-      background: rgba(18,18,26,0.94);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px;
-      padding: 28px;
-      width: 340px;
-      display: flex; flex-direction: column; gap: 14px;
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: #222;
+      text-align: left;
     }
-
-    .modal-box input {
-      width: 100%; height: 38px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 9px;
-      color: var(--text);
-      padding: 0 12px;
-      outline: none;
+    .modal-content h2 { margin: 0; font-size: 18px; }
+    .modal-content input {
+      width: 100%; padding: 8px 10px; border-radius: 6px;
+      border: 1px solid #ccc; font-size: 14px; box-sizing: border-box;
     }
-
-    .btn-row { display: flex; justify-content: flex-end; gap: 8px; }
-    .btn-cancel { height: 36px; padding: 0 16px; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 9px; color: var(--muted); cursor: pointer; }
-    .btn-add { height: 36px; padding: 0 18px; background: linear-gradient(135deg, rgba(110,110,190,0.7), rgba(80,80,160,0.5)); border: none; border-radius: 9px; color: #fff; font-weight: 600; cursor: pointer; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-content button {
+      padding: 8px 14px; border: none; border-radius: 6px;
+      cursor: pointer; font-size: 14px; font-weight: 500;
+    }
+    .btn-row { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+    .btn-cancel { background: #eee; color: #555; }
+    .btn-add { background: #1a73e8; color: white; }
   </style>
 </head>
 <body>
 
-  <div class="bg" id="bg">
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-  </div>
-
-  <div class="clock">
-    <div class="clock-time" id="clockTime">—</div>
-    <div class="clock-date" id="clockDate">—</div>
-  </div>
+  <iframe id="bgFrame" srcdoc='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>:root { --fade-dur:500ms; --logo-size:100px; }* { box-sizing:border-box; margin:0; padding:0; }body { height:100vh; width:100vw; display:flex; justify-content:center; align-items:center; background:transparent; overflow:hidden; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial; color:white; position:relative; }.dot { position:absolute; background:white; border-radius:50%; opacity:0.3; top:-10px; animation:fall linear infinite; }@keyframes fall { 0%{transform:translateY(0) scale(1);opacity:0.6} 100%{transform:translateY(110vh) scale(1.2);opacity:0.0} }.container { display:flex; align-items:center; gap:40px; z-index:10; text-align:center; }.text-section { display:flex; flex-direction:column; align-items:center; }.text-container { position:relative; display:inline-block; padding-bottom:8px; }.underline { position:absolute; bottom:0; left:0; height:3px; width:100%; background:linear-gradient(90deg,#818cf8,#a78bfa); border-radius:10px; box-shadow:0 0 10px #a78bfa; }h1:first-child{color:#E1D9D1} h2{font-size:32px;margin-top:10px;color:white;font-weight:500}#Changing-Text{display:inline-block; opacity:1; transition:opacity var(--fade-dur) ease;}.fade-out{opacity:0}.fade-in{opacity:1}.logo{width:var(--logo-size);height:var(--logo-size);user-select:none;opacity:0.85;}</style></head><body><script>const numDots=80;for(let i=0;i<numDots;i++){ const d=document.createElement("div"); d.className="dot"; const s=Math.random()*3+1; d.style.width=s+"px"; d.style.height=s+"px"; d.style.left=Math.random()*100+"%"; d.style.animationDuration=(4+Math.random()*8)+"s"; d.style.animationDelay=Math.random()*5+"s"; document.body.appendChild(d); }</script><div class="container"><div class="text-section"><div class="text-container"><h1>Bloxcraft <span style="color:white;">New Tab</span></h1><h2><span id="Changing-Text">Searching</span></h2><div class="underline"></div></div></div></div><script>const words=["Searching","Finding","Adventures"];const el=document.getElementById("Changing-Text");let idx=0;function changeWord(){ el.classList.add("fade-out"); setTimeout(()=>{ idx=(idx+1)%words.length; el.textContent=words[idx]; el.classList.remove("fade-out"); el.classList.add("fade-in"); setTimeout(()=>el.classList.remove("fade-in"),500); },500); }setInterval(changeWord,2500);</script></body></html>'></iframe>
 
   <div class="wrap">
-    <div class="hero">
-      <div class="hero-logo">
-        <div class="gem-icon">
-          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="32,3 60,19 60,45 32,61 4,45 4,19" fill="linear-gradient(135deg,#d0d0f0,#3a3a70)"/>
-          </svg>
-        </div>
-        <div class="hero-title">Graphite</div>
-      </div>
-      <div class="hero-sub">New Tab</div>
-      <div class="hero-changing"><span id="changingWord">Searching</span></div>
-    </div>
-
-    <div class="search-wrap">
-      <div class="search-bar">
-        <div class="search-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-        </div>
-        <form id="searchForm" style="flex: 1; display: flex;" action="/uv/service" method="POST">
-          <input id="searchInput" name="url" type="text" placeholder="Search or enter a URL..." autocomplete="off">
-        </form>
-        <span class="search-hint">↵ Enter</span>
-      </div>
+    <div class="logo-rect">
+      <a href="https://bloxcraft-ubg.pages.dev">
+        <img src="https://cdn.jsdelivr.net/gh/tharun9772/tharun9772.github.io@main/bloxcraft_transparent.png" alt="logo">
+      </a>
+    </div>                  
+    
+    <div class="search-wrapper">
+      <input class="search-input" placeholder="Type something to search..." autocomplete="off">
     </div>
 
     <div class="shortcuts" id="shortcuts"></div>
   </div>
 
   <div class="modal" id="addModal">
-    <div class="modal-box">
-      <h3>Add Shortcut</h3>
-      <input type="text" id="nameInput" placeholder="Name">
-      <input type="url" id="urlInput" placeholder="URL">
-      <input type="url" id="iconInput" placeholder="Icon URL (Optional)">
+    <div class="modal-content">
+      <h2>Add Shortcut</h2>
+      <input type="text" id="nameInput" placeholder="Name" required>
+      <input type="url" id="urlInput" placeholder="URL (https://...)" required>
+      <input type="url" id="iconInput" placeholder="Icon URL (optional)">
       <div class="btn-row">
         <button class="btn-cancel" id="cancelBtn">Cancel</button>
-        <button class="btn-add" id="confirmBtn">Add</button>
+        <button class="btn-add" id="addBtn">Add</button>
       </div>
     </div>
   </div>
 
   <script>
-    /* ── BROWSER NAVIGATION HANDLER ── */
-    function launchUrl(target) {
-      let query = target.trim();
+    const shortcutsEl = document.getElementById('shortcuts');
+    const modal = document.getElementById('addModal');
+    const nameInput = document.getElementById('nameInput');
+    const urlInput = document.getElementById('urlInput');
+    const iconInput = document.getElementById('iconInput');
+    const addBtn = document.getElementById('addBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    const defaultShortcuts = [
+      {name:"Bloxcraft UBG", url:"https://bloxcraft-ubg.pages.dev", icon:"https://bloxcraft-ubg.pages.dev/bloxcraft_transparent.png"},
+      {name:"YouTube", url:"https://www.youtube.com", icon:"https://www.youtube.com/favicon.ico"},
+      {name:"DuckDuckGo", url:"https://duckduckgo.com", icon:"https://duckduckgo.com/static-assets/favicons/DDG-iOS-icon_60x60.png"}
+    ];
+
+    /* ── DIRECT UNCOMPLICATED PROXY ROUTING ── */
+    function goProxy(targetUrl) {
+      let query = targetUrl.trim();
       if (!query) return;
 
-      // Simple standard search fallback logic
+      // Determine if text string is a raw web address or a standard text search string
       const isUrl = query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '));
       if (!isUrl) {
         query = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
@@ -421,93 +253,100 @@
         query = 'https://' + query;
       }
 
-      // Check if your primary browser environment logic has native custom encoders loaded globally
-      const encoder = window.__uv$encodeUrl || (window.top && window.top.__uv$encodeUrl);
-      if (encoder) {
-        window.top.location.href = window.top.location.origin + "/uv/service/" + encoder(query);
+      // Check if your primary browser container has custom proxy translation loaded locally
+      const customEncoder = window.__uv$encodeUrl || (window.top && window.top.__uv$encodeUrl);
+      if (customEncoder) {
+        window.top.location.href = window.top.location.origin + "/uv/service/" + customEncoder(query);
       } else {
-        // Simple direct browser navigation fallback matching standard forms
-        const form = document.getElementById('searchForm');
-        const input = document.getElementById('searchInput');
-        input.value = query;
-        form.target = "_top"; // breakout to main view container
-        form.submit();
+        // Simple direct browser query navigation fallback
+        window.top.location.href = query;
       }
     }
 
-    /* ── SEARCH BOX SUBMIT INTERCEPTION ── */
-    document.getElementById('searchForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const inputVal = document.getElementById('searchInput').value;
-      launchUrl(inputVal);
-    });
-
-    /* ── PARTICLES ── */
-    const bg = document.getElementById('bg');
-    for (let i = 0; i < 70; i++) {
-      const d = document.createElement('div');
-      d.className = 'particle';
-      const s = Math.random() * 2 + 1;
-      d.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${6+Math.random()*12}s;animation-delay:${Math.random()*5}s;`;
-      bg.appendChild(d);
+    function loadShortcuts(){
+      const data = localStorage.getItem('shortcuts');
+      return data ? JSON.parse(data) : defaultShortcuts;
+    }
+    
+    function saveShortcuts(list){
+      localStorage.setItem('shortcuts', JSON.stringify(list));
     }
 
-    /* ── CLOCK & WORD TOGGLE ── */
-    function updateClock() {
-      const now = new Date();
-      let h = now.getHours(), m = now.getMinutes();
-      document.getElementById('clockTime').textContent = `${h % 12 || 12}:${m < 10 ? '0'+m : m} ${h < 12 ? 'AM':'PM'}`;
-      document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-    }
-    updateClock(); setInterval(updateClock, 1000);
-
-    const words = ['Searching', 'Browsing', 'Exploring'];
-    let wi = 0;
-    setInterval(() => {
-      const el = document.getElementById('changingWord');
-      el.classList.add('fade');
-      setTimeout(() => { wi = (wi+1)%words.length; el.textContent = words[wi]; el.classList.remove('fade'); }, 400);
-    }, 3000);
-
-    /* ── DASHBOARD SHORTCUT TILES ── */
-    const defaults = [
-      { name: 'YouTube', url: 'https://youtube.com', icon: 'https://www.youtube.com/favicon.ico' },
-      { name: 'DuckDuckGo', url: 'https://duckduckgo.com', icon: 'https://duckduckgo.com/favicon.ico' },
-      { name: 'GitHub', url: 'https://github.com', icon: 'https://github.com/favicon.ico' }
-    ];
-
-    function renderShortcuts() {
-      const list = JSON.parse(localStorage.getItem('g-shorts') || JSON.stringify(defaults));
-      const box = document.getElementById('shortcuts');
-      box.innerHTML = '';
+    function renderShortcuts(){
+      const list = loadShortcuts();
+      shortcutsEl.innerHTML = '';
       
-      list.forEach((s, i) => {
-        const item = document.createElement('div');
-        item.className = 'tile';
-        item.innerHTML = `<div class="remove-btn">✕</div><img class="fav" src="${s.icon}"><span style="margin-top:4px">${s.name}</span>`;
-        item.onclick = (e) => { if(!e.target.classList.contains('remove-btn')) launchUrl(s.url); };
-        item.querySelector('.remove-btn').onclick = (e) => { e.stopPropagation(); list.splice(i,1); localStorage.setItem('g-shorts', JSON.stringify(list)); renderShortcuts(); };
-        box.appendChild(item);
+      list.forEach((s, i)=>{
+        const a = document.createElement('a');
+        a.className = 'tile';
+        a.href = '#';
+        a.innerHTML = `
+          <div class="remove-btn" title="Remove">×</div>
+          <img class="fav" src="${s.icon || 'https://cdn-icons-png.flaticon.com/512/545/545682.png'}" alt="">
+          <span>${s.name}</span>
+        `;
+        
+        // Link clicking goes to our centralized router instead of basic href bindings
+        a.addEventListener('click', (e)=>{
+          if (!e.target.classList.contains('remove-btn')) {
+            e.preventDefault();
+            goProxy(s.url);
+          }
+        });
+
+        a.querySelector('.remove-btn').addEventListener('click',(e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+          const list = loadShortcuts();
+          list.splice(i,1);
+          saveShortcuts(list);
+          renderShortcuts();
+        });
+        shortcutsEl.appendChild(a);
       });
 
       const add = document.createElement('div');
-      add.className = 'tile add-tile';
-      add.innerHTML = '<div class="add-icon">+</div><span>Add</span>';
-      add.onclick = () => document.getElementById('addModal').classList.add('active');
-      box.appendChild(add);
+      add.className = 'tile';
+      add.innerHTML = `<div class="add-btn">+</div><span>Add Shortcut</span>`;
+      add.addEventListener('click', ()=>modal.classList.add('active'));
+      shortcutsEl.appendChild(add);
     }
+
     renderShortcuts();
 
-    document.getElementById('cancelBtn').onclick = () => document.getElementById('addModal').classList.remove('active');
-    document.getElementById('confirmBtn').onclick = () => {
-      const n = document.getElementById('nameInput').value, u = document.getElementById('urlInput').value, i = document.getElementById('iconInput').value;
-      if(!n || !u) return;
-      const list = JSON.parse(localStorage.getItem('g-shorts') || JSON.stringify(defaults));
-      list.push({ name: n, url: u, icon: i || `https://www.google.com/s2/favicons?domain=${u}` });
-      localStorage.setItem('g-shorts', JSON.stringify(list));
-      document.getElementById('addModal').classList.remove('active');
+    cancelBtn.onclick = () => modal.classList.remove('active');
+    addBtn.onclick = () => {
+      const name = nameInput.value.trim();
+      let url = urlInput.value.trim();
+      const icon = iconInput.value.trim();
+      if(!name || !url) return;
+      
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      
+      const list = loadShortcuts();
+      list.push({name, url, icon: icon || `https://www.google.com/s2/favicons?domain=${url}&sz=64`});
+      saveShortcuts(list);
+      modal.classList.remove('active');
+      nameInput.value = urlInput.value = iconInput.value = '';
       renderShortcuts();
     };
+
+    modal.addEventListener('click', e => {
+      if(e.target === modal) modal.classList.remove('active');
+    });
+
+    /* ── SEARCH INPUT ENTER CAPTURE ── */
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          goProxy(searchInput.value);
+        }
+      });
+    }
   </script>
 </body>
 </html>
