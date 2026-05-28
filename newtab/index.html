@@ -596,30 +596,18 @@
         url = 'https://' + url;
       }
 
-      // 1. Direct Object Injection Detection
+      // 1. Pull current environment encoding objects up the live iframe hierarchy
       const uvConfig = window.__uv$config || (window.parent && window.parent.__uv$config) || (window.top && window.top.__uv$config);
       const uvEncode = window.__uv$encodeUrl || (window.parent && window.parent.__uv$encodeUrl) || (window.top && window.top.__uv$encodeUrl);
 
       if (uvConfig && uvEncode) {
-        // Run it directly into the top level window context
-        window.top.location.href = uvConfig.prefix + uvEncode(url);
+        window.top.location.href = window.top.location.origin + uvConfig.prefix + uvEncode(url);
         return;
       }
 
-      // 2. Main Container UI Target Breakout
-      // Searches your dashboard code for an iframe container (like archive-frame, uv-frame, etc.)
-      const topDoc = window.top.document;
-      const targetFrame = topDoc.getElementById('archive-frame') || topDoc.getElementById('uv-frame') || topDoc.querySelector('iframe');
-      
-      // If we are currently executing inside that frame, change the top browser tab's destination to prevent nesting!
-      if (targetFrame && window.self !== window.top) {
-         window.top.location.href = window.top.location.origin + "/uv/service/" + encodeURIComponent(url);
-         return;
-      }
-
-      // 3. Complete Root Directory Path Parsing (Safe Fallback)
-      // This will force the parent window to parse Ultraviolet directly from the root domain origin
-      window.top.location.href = window.top.location.origin + "/uv/service/" + encodeURIComponent(url);
+      // 2. Custom Script Fallback via search index redirection (Standard logic used on static Cloudflare architectures)
+      // This routes back through the primary processing engine index file to execute configuration workers properly
+      window.top.location.href = window.top.location.origin + "/index.html?url=" + encodeURIComponent(url);
     }
 
     /* ── PARTICLES ── */
